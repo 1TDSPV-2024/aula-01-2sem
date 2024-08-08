@@ -37,9 +37,22 @@ frutas.forEach((f, indice, arrayDeFrutas) => console.log(indice, arrayDeFrutas[i
 //Recuperando a lista ul
 let lista = document.getElementById("lista");
 
-frutas.forEach((fruta) => {
-    //Criando elemento li e adicionando um nó de texto
-    let elementoLi = document.createElement("li");
-    elementoLi.textContent = fruta;
-    lista.appendChild(elementoLi);
+
+document.getElementById("btnAdd").addEventListener("click", () => {
+    let valorDigitadoNoCampo = document.getElementById("idFruta").value;
+
+    frutas.push(valorDigitadoNoCampo);
+    renderizaLista();
 });
+
+function renderizaLista() {
+    lista.innerHTML = "";
+    frutas.forEach((fruta) => {
+        //Criando elemento li e adicionando um nó de texto
+        let elementoLi = document.createElement("li");
+        elementoLi.textContent = fruta;
+        lista.appendChild(elementoLi);
+    });
+}
+
+renderizaLista();
