@@ -1,58 +1,64 @@
-// Exemplo hoisting
-// var nome = "Ale";
-// if (true) {
-//     var nome = "joão";
-// }
-// console.log(nome);
 
-//Declarando um array de Frutas
-let frutas = ["Jambo", "Zimbro", "Jaca", "Uva", "Lichia", "Maçã"];
-//Visualizando o conteúdo do array com console LOG e TABLE
-console.log(frutas);
-console.table(frutas);
-console.table(frutas);
+document.addEventListener('DOMContentLoaded', function () {
 
-//Percorrendo o array com LOOPS FOR /
-console.log("=======================================LOOP FOR");
-for (let x = 0; x < frutas.length; x++) {
-    console.log(frutas[x]);
-}
+    const formulario = document.querySelector("#form-names");
+    const inputNome = document.querySelector("#idNome");
+    const botaoAdd = document.querySelector("#btnAdd");
+    const botaoOrdenar = document.querySelector("#btnOrdenar");
+    const botaoReverter = document.querySelector("#btnReverter");
+    const lista = document.querySelector("#lista");
 
-//Percorrendo o array com LOOPS FOR OF/
-console.log("=======================================LOOP FOR OF");
-for (const fruta of frutas) {
-    console.log(fruta);
-}
+    let arrayDeNomes = [];
 
-//Percorrendo o array com LOOPS FOR IN/
-console.log("=======================================LOOP FOR IN");
-for (const indice in frutas) {
-    console.log(indice);
-}
+    //add um nome na lista:
+    function addNome(nome) {
 
-//Percorrendo o array com LOOPS FOR IN/
-console.log("=======================================LOOP FOR EACH");
-frutas.forEach((f, indice, arrayDeFrutas) => console.log(indice, arrayDeFrutas[indice]));
+        if (nome !== undefined && nome !== "") {
+            arrayDeNomes.push(nome);
+            inputNome.value = "";
+            renderizarLista();
+            console.log("Nome inserido com sucesso na lista!");
+        } else {
+            console.log("Por favor, insira um nome!");
+        }
+    }
 
-//Recuperando a lista ul
-let lista = document.getElementById("lista");
+    
+    function renderizarLista() {
+        //Zerar a lista
+        lista.innerHTML = "";
+        for (let x = 0; x < arrayDeNomes.length; x++) {
+            const liElement = document.createElement("li");
+            liElement.textContent = arrayDeNomes[x];
+            lista.appendChild(liElement);
+        }
+    }
+
+    //ordenar a lista:
+    function ordenarLista() {
+        arrayDeNomes.sort();
+        renderizarLista();
+    }
+
+    //ordenar a lista:
+    function reverterLista() {
+        arrayDeNomes.reverse();
+        renderizarLista();
+    }
 
 
-document.getElementById("btnAdd").addEventListener("click", () => {
-    let valorDigitadoNoCampo = document.getElementById("idFruta").value;
-
-    frutas.push(valorDigitadoNoCampo);
-    renderizaLista();
-});
-
-function renderizaLista() {
-    lista.innerHTML = "";
-    frutas.forEach((fruta) => {
-        //Criando elemento li e adicionando um nó de texto
-        let elementoLi = document.createElement("li");
-        elementoLi.textContent = fruta;
-        lista.appendChild(elementoLi);
+    //Chamando as funções
+    botaoAdd.addEventListener("click", function (e) {
+        e.preventDefault();
+        addNome(inputNome.value);
     });
-}
 
-renderizaLista();
+    botaoOrdenar.addEventListener("click", function (e) {
+        ordenarLista();
+    });
+
+    botaoReverter.addEventListener("click", function (e) {
+        reverterLista();
+    });
+
+});
